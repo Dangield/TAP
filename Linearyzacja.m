@@ -55,11 +55,12 @@ A = [
     h*k_0*exp(-E_R/T)/Ro/c_p, -F/V-a*(F_C)^(b+1)/(F_C+a*(F_C)^b/(2*Ro_c*c_pc))/(V*Ro*c_p)
     ]/60;
 eig(A)
-B = [-F/V, 0;
-    0, -a*(b+1)*(F_C)^b*(1+a*(F_C)^(b-1)/(2*Ro_c*c_pc))/(F_C+a*(F_C)^b/(2*Ro_c*c_pc))^2/(V*Ro*c_p)
+B = [F_in/V, 0;
+    0, -((F_C^b*a*(T - T_Cin)*(b + 1))/(F_C + (F_C^b*a)/(2*c_pc*Ro))...
+	- (F_C^(b + 1)*a*(T - T_Cin)*((F_C^(b - 1)*a*b)/(2*c_pc*Ro_c) + 1))/(F_C + (F_C^b*a)/(2*c_pc*Ro_c))^2)/(V*c_p*Ro)
     ]/60;
 E = [0, 0;
-    F_in/V, -a*(F_C)^(b+1)/(F_C+a*(F_C)^b/(2*Ro_c*c_pc))/(V*Ro*c_p)
+    F_in/V, a*(F_C)^(b+1)/(F_C+a*(F_C)^b/(2*Ro_c*c_pc))/(V*Ro*c_p)
     ]/60;
 
 
