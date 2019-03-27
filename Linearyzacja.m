@@ -1,3 +1,5 @@
+close all
+clear variables
 global Ro Ro_c c_p c_pc k_0 E_R h a b;
 global V F_in F C_Ain F_C T_in T_Cin;
 
@@ -62,7 +64,7 @@ for i=1:7
 	plot(t, x(:, 1), 'Color', color_formats(i, :))
 	hold on
 	
-	labels = [labels, "Model nieliniowy, C_Ain zmnienione " + coef + " razy"];
+	labels = [labels, "Model nieliniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
 end
 
 lin_x0 = x0 - [C_A; T];
@@ -79,7 +81,7 @@ for i=1:7
 	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
 	hold on
 	
-	labels = [labels, "Model liniowy, C_Ain zmnienione " + coef + " razy"];
+	labels = [labels, "Model liniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
 end
 legend(labels)
 title("C_A")
