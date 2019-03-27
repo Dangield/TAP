@@ -47,7 +47,7 @@ E = [0, 0;
 t0 = 0;
 tfinal = 500;
 x0 = [C_A; T];
-coef_vals = [0.6, 0.9, 0.95, 1, 1.05, 1.1, 1.4];
+coef_vals = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
 % Zmienne do plotowania
 labels = [];
@@ -69,7 +69,7 @@ for i=1:7
 	hold on
 	plot(t, x(:, 2), 'Color', color_formats(i, :))
 	
-	labels = [labels, "Model nieliniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
+	labels = [labels, "Model nieliniowy, C_{Ain} zmnienione " + coef_vals(i) + " razy"];
 end
 
 lin_x0 = x0 - [C_A; T];
@@ -91,7 +91,7 @@ for i=1:7
 	hold on
 	plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
 	
-	labels = [labels, "Model liniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
+	labels = [labels, "Model liniowy, C_{Ain} zmnienione " + coef_vals(i) + " razy"];
 end
 figure(1)
 legend(labels)
