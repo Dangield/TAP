@@ -182,7 +182,7 @@ global V F_in F;
 %     d_T = (F_in*T_in/V - F*x(2)/V + h*k_0*exp(-E_R/x(2))*x(1)/(Ro*c_p) - a*(F_C)^(b+1)/((F_C + a*(F_C)^b/(2*Ro_c+c_pc))*(V*Ro*c_p))*(x(2)-T_Cin))/60;
 
 d_Ca = (F_in*input(1)/V - F*x(1)/V - k_0*exp(-E_R/x(2))*x(1))/60;
-d_T = (F_in*disturbance(1)/V - F*x(2)/V + h*k_0*exp(-E_R/x(2))*x(1)/(Ro*c_p) - a*(input(2))^(b+1)/((input(2)+ a*(input(2))^b/(2*Ro_c+c_pc))*(V*Ro*c_p))*(x(2)-disturbance(2)))/60;
+d_T = (F_in*disturbance(1)/V - F*x(2)/V + h*k_0*exp(-E_R/x(2))*x(1)/(Ro*c_p) - a*(input(2))^(b+1)/((input(2)+ a*(input(2))^b/(2*Ro_c*c_pc))*(V*Ro*c_p))*(x(2)-disturbance(2)))/60;
 
 %     if t < 10000
 %         t
