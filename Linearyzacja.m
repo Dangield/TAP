@@ -54,6 +54,7 @@ labels = [];
 color_formats = [[1 0 0]; [0 1 0]; [0 0 1]; [0 0.7 0.7]; [0.7 0 0.7]; [0.7 0.7 0]; [0 0 0]];
 
 figure(1)
+figure(2)
 for i=1:7
 	
 	c0 = [C_Ain*coef_vals(i); F_C];
@@ -61,8 +62,12 @@ for i=1:7
 	
 	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
 	
-	plot(t, x(:, 1), 'Color', color_formats(i, :))
+	figure(1)
 	hold on
+	plot(t, x(:, 1), 'Color', color_formats(i, :))
+	figure(2)
+	hold on
+	plot(t, x(:, 2), 'Color', color_formats(i, :))
 	
 	labels = [labels, "Model nieliniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
 end
@@ -77,40 +82,22 @@ for i=1:7
 	
 	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
 	lin_x(:, 1) = lin_x(:, 1) + C_A;
+	lin_x(:, 2) = lin_x(:, 2) + T;
 	
-	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	figure(1)
 	hold on
+	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	figure(2)
+	hold on
+	plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
 	
 	labels = [labels, "Model liniowy, C_Ain zmnienione " + coef_vals(i) + " razy"];
 end
+figure(1)
 legend(labels)
 title("C_A")
 
-figure
-for i=1:7
-	c0 = [C_Ain*coef_vals(i); F_C];
-	d0 = [T_in; T_Cin];
-	
-	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
-	
-	plot(t, x(:, 2), 'Color',  color_formats(i, :))
-	hold on
-end
-
-for i=1:7
-	coef = coef_vals(i);
-	c0 = [C_Ain*coef; F_C];
-	d0 = [T_in; T_Cin];
-	
-	lin_c0 = c0 - [C_Ain; F_C];
-	lin_d0 = d0 - [T_in; T_Cin];
-	
-	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
-	lin_x(:, 2) = lin_x(:, 2) + T;
-	
-	plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
-	hold on
-end
+figure(2)
 title("T")
 legend(labels)
 
