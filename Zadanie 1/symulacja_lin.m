@@ -1,80 +1,62 @@
 close all
 clear
-clc
 addpath("../")
 
 consts
 linearyzacja
+clc
 
-% Zmienne do plotowania
-labels       = [];
-linearLabels = [];
-color_formats = [[1 0 0]; [0 1 0]; [0 0 1]; [0 0.7 0.7]; [0.7 0 0.7]; [0.7 0.7 0]; [0 0 0]];
-
-% Zmienne do symulacji
+% Symulacja
 t0 = 0;
 tfinal = 20;
 x0 = [C_A; T];
-d0 = [T_in; T_Cin];
-u0 = [C_Ain; F_C];
+u0 = [C_Ain; F_C; T_in; T_Cin];
 coef_vals  = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
 reactor       = Reactor();
 linearReactor = LinearReactor();
 
-for i=1:size(coef_vals, 2)
-	c0 = [C_Ain*coef_vals(i); F_C];
-	
-	[t, x]         = reactor.simulate(x0, c0, d0, t0, tfinal);
-	[lin_t, lin_x] = linearReactor.simulate(x0, c0, d0, t0, tfinal);
-	
-	labels = [labels, "Model nieliniowy, C_{Ain} = " + C_Ain*coef_vals(i), ...
-		"Model liniowy,	C_{Ain} = " + C_Ain*coef_vals(i)];
-	
-	figure(1)
-		hold on
-		plot(t, x(:, 1), 'Color', color_formats(i, :))
-		plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
-	figure(2)
-		hold on
-		plot(t, x(:, 2), 'Color', color_formats(i, :))
-		plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
+simResults = cell(4, 2);
+
+for inputIterator = 1:4
+	u = u0;
+	for i=1:size(coef_vals, 2)
+		u(inputIterator) = u0(inputIterator) * coef_vals(i);
+		c0 = u(1:2);
+		d0 = u(3:4);
+		
+		[t, x] = reactor.simulate(x0, c0, d0, t0, tfinal);
+		[tLin, xLin] = linearReactor.simulate(x0, c0, d0, t0, tfinal);
+		
+		simResults{inputIterator, 1}{i} = [t, x];
+		simResults{inputIterator, 2}{i} = [tLin, xLin];
+	end
 end
 
-figure(1)
-	title("C_A")
-	legend(labels);
+% Rysowanie
+color_formats = [[1 0 0]; [0 1 0]; [0 0 1]; [0 0.7 0.7]; [0.7 0 0.7]; [0.7 0.7 0]; [0 0 0]];
+inputLabels  = ["C_{Ain}", "F_C", "T_{in}", "T_{Cin}"];
+outputLabels = ["C_A", "T"];
 
-figure(2)
-	title("T")
-	legend(labels);
+for inputIterator = 1:4
+	inputLabel = inputLabels(inputIterator);
+	for outputIterator = 1:2
+		legendLabels = [];
+		figure
+			hold on
+			title(outputLabels(outputIterator) + "(" + inputLabel + ")")
+			for jumpIterator=1:size(coef_vals, 2)
+				t = simResults{inputIterator, 1}{jumpIterator}(:, 1);
+				x = simResults{inputIterator, 1}{jumpIterator}(:, 1 + outputIterator);
+				t_lin = simResults{inputIterator, 2}{jumpIterator}(:, 1);
+				x_lin = simResults{inputIterator, 2}{jumpIterator}(:, 1 + outputIterator);
+				
+				plot(t, x, 'Color', color_formats(jumpIterator, :))
+				plot(t_lin, x_lin, 'Color',  color_formats(jumpIterator, :), 'LineStyle', '--')
 
-% zmiana drugiego sterowania
-labels = [];
-coef_vals = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
-
-for i=1:size(coef_vals, 2)
-	c0 = [C_Ain; F_C*coef_vals(i)];
-	
-	[t, x] = reactor.simulate(x0, c0, d0, t0, tfinal);
-	[lin_t, lin_x] = linearReactor.simulate(x0, c0, d0, t0, tfinal);
-	
-	labels = [labels, "Model nieliniowy, F_C = " + F_C*coef_vals(i), ...
-		"Model liniowy, F_C = " + F_C*coef_vals(i)];
-	
-	figure(3)
-		hold on
-		plot(t, x(:, 1), 'Color', color_formats(i, :))
-		plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
-	figure(4)
-		hold on
-		plot(t, x(:, 2), 'Color', color_formats(i, :))
-		plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
+				legendLabels = [legendLabels, "Model nieliniowy, " + inputLabel + " = " + u0(inputIterator) * coef_vals(jumpIterator), ...
+					"Model liniowy, " + inputLabel + " = " + u0(inputIterator) * coef_vals(jumpIterator)];
+			end
+			legend(legendLabels);
+	end
 end
-
-figure(3)
-	title("C_A")
-	legend(labels)
-figure(4)
-	title("T")
-	legend(labels)

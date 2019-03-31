@@ -1,4 +1,9 @@
 close all
+clear
+clc
+addpath("../")
+
+consts
 
 dC_Anlin = [];
 dC_Alin = [];
