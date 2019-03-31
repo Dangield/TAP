@@ -1,47 +1,4 @@
 close all
-clear variables
-global Ro Ro_c c_p c_pc k_0 E_R h a b;
-global V F_in F C_Ain F_C T_in T_Cin C_A T;
-
-%Sta�e
-Ro = 1e6;
-Ro_c = 1e6;
-c_p = 1;
-c_pc = 1;
-k_0 = 1e10;
-E_R = 8330.1;
-h = 130e6;
-a = 1.678e6;
-b = 0.5;
-
-% Warto�ci steruj�ce
-V = 1;
-F_in = 1;
-F = 1;
-% Sterowanie
-C_Ain = 2;
-F_C = 15;
-% Zak��cenie
-T_in = 323;
-T_Cin = 365;
-% Wyj�cia
-C_A = 0.2646;
-T = 393.9531;
-
-% linearyzacja:
-global A B E
-A = [
-	-F/V - k_0*exp(-E_R/T), -k_0*(-E_R)*(-1/T^2)*exp(-E_R/T)*C_A;
-	h*k_0*exp(-E_R/T)/Ro/c_p, -F/V+(k_0*h*V*(-E_R)*(-1/T^2)*exp(-E_R/T)*C_A -a*(F_C)^(b+1)/(F_C+a*(F_C)^b/(2*Ro_c*c_pc)))/(V*Ro*c_p)
-	];
-eig(A)
-B = [F_in/V, 0;
-	0, -((F_C^b*a*(T - T_Cin)*(b + 1))/(F_C + (F_C^b*a)/(2*c_pc*Ro))...
-	- (F_C^(b + 1)*a*(T - T_Cin)*((F_C^(b - 1)*a*b)/(2*c_pc*Ro_c) + 1))/(F_C + (F_C^b*a)/(2*c_pc*Ro_c))^2)/(V*c_p*Ro)
-	];
-E = [0, 0;
-	F_in/V, a*(F_C)^(b+1)/(F_C+a*(F_C)^b/(2*Ro_c*c_pc))/(V*Ro*c_p)
-	];
 
 % Zmienne do plotowania
 labels = [];
@@ -52,6 +9,8 @@ t0 = 0;
 tfinal = 20;
 x0 = [C_A; T];
 coef_vals = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
+
+%% zmiana 1. sterowania
 
 figure(1)
 figure(2)
@@ -95,56 +54,16 @@ for i=1:7
 end
 figure(1)
 % legend(labels)
-title("C_A")
+title("C_A(C_{Ain})")
 
 figure(2)
-title("T")
-% legend(labels)
+title("T(C_{Ain})")
 
-% figure(3)
-% title("C_A")
-% figure(4)
-% title("T")
-% coef_vals = 0.4:0.01:1.6;
-% for i=1:length(coef_vals)
-% 	
-% 	c0 = [C_Ain*coef_vals(i); F_C];
-% 	d0 = [T_in; T_Cin];
-% 	
-% 	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
-% 	
-% 	figure(3)
-% 	hold on
-% 	plot(coef_vals(i), x(end, 1), 'bo')
-% 	figure(4)
-% 	hold on
-% 	plot(coef_vals(i), x(end, 2), 'bo')	
-% end
-% 
-% for i=1:length(coef_vals)
-% 	c0 = [C_Ain*coef_vals(i); F_C];
-% 	d0 = [T_in; T_Cin];
-% 	lin_c0 = c0 - [C_Ain; F_C];
-% 	lin_d0 = d0 - [T_in; T_Cin];
-% 	
-% 	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
-% 	lin_x(:, 1) = lin_x(:, 1) + C_A;
-% 	lin_x(:, 2) = lin_x(:, 2) + T;
-% 	
-% 	figure(3)
-% 	hold on
-% 	plot(coef_vals(i), lin_x(end, 1), 'ro')
-% 	figure(4)
-% 	hold on
-% 	plot(coef_vals(i), lin_x(end, 2), 'ro')	
-% end
-
-% zmiana drugiego sterowania
+%% zmiana 2. sterowania
 labels = [];
-coef_vals = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
-figure(5)
-figure(6)
+figure(3)
+figure(4)
 for i=1:7
 	
 	c0 = [C_Ain; F_C*coef_vals(i)];
@@ -152,10 +71,10 @@ for i=1:7
 	
 	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
 	
-	figure(5)
+	figure(3)
 	hold on
 	plot(t, x(:, 1), 'Color', color_formats(i, :))
-	figure(6)
+	figure(4)
 	hold on
 	plot(t, x(:, 2), 'Color', color_formats(i, :))
 	
@@ -174,6 +93,56 @@ for i=1:7
 	lin_x(:, 1) = lin_x(:, 1) + C_A;
 	lin_x(:, 2) = lin_x(:, 2) + T;
 	
+	figure(3)
+	hold on
+	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	figure(4)
+	hold on
+	plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	
+	labels = [labels, "Model liniowy, F_C zmnienione " + coef_vals(i) + " razy"];
+end
+figure(3)
+% legend(labels)
+title("C_A(F_C)")
+
+figure(4)
+title("T(F_C)")
+
+%% Zmiana 1. zakłócenia:
+labels = [];
+
+figure(5)
+figure(6)
+for i=1:7
+	
+	c0 = [C_Ain; F_C];
+	d0 = [T_in*coef_vals(i); T_Cin];
+	
+	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
+	
+	figure(5)
+	hold on
+	plot(t, x(:, 1), 'Color', color_formats(i, :))
+	figure(6)
+	hold on
+	plot(t, x(:, 2), 'Color', color_formats(i, :))
+	
+	labels = [labels, "Model nieliniowy, F_C zmnienione " + coef_vals(i) + " razy"];
+end
+
+lin_x0 = x0 - [C_A; T];
+
+for i=1:7
+	c0 = [C_Ain; F_C];
+	d0 = [T_in*coef_vals(i); T_Cin];
+	lin_c0 = c0 - [C_Ain; F_C];
+	lin_d0 = d0 - [T_in; T_Cin];
+	
+	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
+	lin_x(:, 1) = lin_x(:, 1) + C_A;
+	lin_x(:, 2) = lin_x(:, 2) + T;
+	
 	figure(5)
 	hold on
 	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
@@ -185,52 +154,63 @@ for i=1:7
 end
 figure(5)
 % legend(labels)
-title("C_A")
+title("C_A(T_{in})")
 
 figure(6)
-title("T")
+title("T(T_{in})")
+
+%% Zmiana 2. zakłócenia:
+labels = [];
+
+figure(7)
+figure(8)
+for i=1:7
+	
+	c0 = [C_Ain; F_C];
+	d0 = [T_in; T_Cin*coef_vals(i)];
+	
+	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
+	
+	figure(7)
+	hold on
+	plot(t, x(:, 1), 'Color', color_formats(i, :))
+	figure(8)
+	hold on
+	plot(t, x(:, 2), 'Color', color_formats(i, :))
+	
+	labels = [labels, "Model nieliniowy, F_C zmnienione " + coef_vals(i) + " razy"];
+end
+
+lin_x0 = x0 - [C_A; T];
+
+for i=1:7
+	c0 = [C_Ain; F_C];
+	d0 = [T_in; T_Cin*coef_vals(i)];
+	lin_c0 = c0 - [C_Ain; F_C];
+	lin_d0 = d0 - [T_in; T_Cin];
+	
+	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
+	lin_x(:, 1) = lin_x(:, 1) + C_A;
+	lin_x(:, 2) = lin_x(:, 2) + T;
+	
+	figure(7)
+	hold on
+	plot(lin_t, lin_x(:, 1), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	figure(8)
+	hold on
+	plot(lin_t, lin_x(:, 2), 'Color',  color_formats(i, :), 'LineStyle', '--')
+	
+	labels = [labels, "Model liniowy, F_C zmnienione " + coef_vals(i) + " razy"];
+end
+figure(7)
 % legend(labels)
+title("C_A(T_{Cin})")
 
-% figure(7)
-% title("C_A")
-% figure(8)
-% title("T")
-% coef_vals = 0.4:0.01:1.6;
-% for i=1:length(coef_vals)
-% 	
-% 	c0 = [C_Ain; F_C*coef_vals(i)];
-% 	d0 = [T_in; T_Cin];
-% 	
-% 	[t, x] = ode45(@(t, x) reactor(t, x, c0, d0), [t0 tfinal], x0);
-% 	
-% 	figure(7)
-% 	hold on
-% 	plot(coef_vals(i), x(end, 1), 'bo')
-% 	figure(8)
-% 	hold on
-% 	plot(coef_vals(i), x(end, 2), 'bo')	
-% end
-% 
-% for i=1:length(coef_vals)
-% 	c0 = [C_Ain; F_C*coef_vals(i)];
-% 	d0 = [T_in; T_Cin];
-% 	lin_c0 = c0 - [C_Ain; F_C];
-% 	lin_d0 = d0 - [T_in; T_Cin];
-% 	
-% 	[lin_t, lin_x] = ode45(@(t, x) lin_reactor(t, x, lin_c0, lin_d0), [t0 tfinal], lin_x0);
-% 	lin_x(:, 1) = lin_x(:, 1) + C_A;
-% 	lin_x(:, 2) = lin_x(:, 2) + T;
-% 	
-% 	figure(7)
-% 	hold on
-% 	plot(coef_vals(i), lin_x(end, 1), 'ro')
-% 	figure(8)
-% 	hold on
-% 	plot(coef_vals(i), lin_x(end, 2), 'ro')	
-% end
+figure(8)
+title("T(T_{Cin})")
 
-figure(9)
-step(c2d(tf(ss(A,[B E], eye(2), zeros(2,4))),1))
+% figure(9)
+% step(c2d(tf(ss(A,[B E], eye(2), zeros(2,4))),1))
 
 function dx = reactor(t, x, input, disturbance)
 	global Ro Ro_c c_p c_pc k_0 E_R h a b;
