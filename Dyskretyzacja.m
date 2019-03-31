@@ -9,9 +9,10 @@ lin_d0 = d0 - [T_in; T_Cin];
 for Tp=[0.1, 0.5, 1, 2, 3]
     d_T = [0];
     d_C_A = [0];
-    d_Y = [d_T; d_C_A];
+%     d_Y = [d_T; d_C_A];
     T_s = [];
     d_Y_l = [];
+    d_Y = [0; 0];
     
     for i=0:Tp:15
         k1 = Tp*lin_reactor(0, d_Y, c0, d0);
@@ -19,7 +20,7 @@ for Tp=[0.1, 0.5, 1, 2, 3]
         k3 = Tp*lin_reactor(0, d_Y + k2/2, c0 + [Tp; Tp]/2, d0 + [Tp; Tp]/2);
         k4 = Tp*lin_reactor(0, d_Y + k3, c0 + [Tp; Tp], d0 + [Tp; Tp]);
         
-        d_Y = (k1 + 2*k2 + 2*k3 + k4)/6;
+        d_Y = d_Y + (k1 + 2*k2 + 2*k3 + k4)/6;
         d_Y_l = [d_Y_l, d_Y];
         T_s = [T_s; i];
     end
@@ -42,9 +43,11 @@ end
 figure(1)
 hold on
 plot(lin_t, lin_x(:, 1))
+legend("0.1", "0.5", "1", "2", "3", "ciągły")
 figure(2)
 hold on
 plot(lin_t, lin_x(:, 2))
+legend("0.1", "0.5", "1", "2", "3", "ciągły")
 
 function dx = lin_reactor(t, x, input, disturbance)
 	global A B E;
