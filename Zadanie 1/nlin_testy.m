@@ -122,7 +122,7 @@ dT_nlin = [];
 dT_lin = [];
 
 F_C_vals = [];
-for F_C_test=340:1:440
+for F_C_test=5:0.1:30
 	c0 = [C_Ain; F_C_test];
 	d0 = [T_in; T_Cin];
 	lin_c0 = c0 - [C_Ain; F_C];
