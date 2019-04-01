@@ -43,7 +43,8 @@ Po zastąpieniu stałych w równaniach liczbami, otrzymywany jest następujący 
 	\left\{
 	\begin{tabular}{l}
 	$\frac{dC_A}{dt} = C_{Ain} - C_A - 10^{10}\cdot e^{-\frac{8330.1}{T}}\cdot C_A$\\
-	$\frac{dT}{dt} = T_{in} - T + 130\cdot 10^{10}\cdot e^{-\frac{8330.1}{T}}\cdot C_A-\frac{1.678\cdot (F_C)^{1.5}}{F_C+\frac{1.678\cdot (F_C)^{0.5}}{2}}(T-T_{Cin})$
+	$\frac{dT}{dt} = T_{in} - T + 130\cdot 10^{10}\cdot e^{-\frac{8330.1}{T}}\cdot C_A-\frac{1.678\cdot (F_C)^{1.5}}{F_C+0.839\cdot (F_C)^{0.5}}(T-T_{Cin})$
 	\end{tabular}
 	\right.
 \end{equation}
+Ostatnią rzeczą jaka musiała zostać wzięta pod uwagę było przybliżenie wartości w punkcie pracy. Jako, że zostały one przybliżone, należało dokładniej je określić. Ustawiając wszystkie zmienne (prócz wyjściowych) na podane wartości, po ustatkowaniu wyjścia wyniosły  w przybliżeniu $C_A = 0.2646$ oraz $T = 393.9531$.
