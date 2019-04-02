@@ -39,6 +39,7 @@ end
 color_formats = [[1 0 0]; [0 1 0]; [0 0 1]; [0 0.7 0.7]; [0.7 0 0.7]; [0.7 0.7 0]; [0 0 0]];
 inputLabels  = ["C_{Ain}", "F_C", "T_{in}", "T_{Cin}"];
 outputLabels = ["C_A", "T"];
+outputUnits  = ["kmol/m^3", "K"];
 
 for inputIterator = 1:4
 	inputLabel = inputLabels(inputIterator);
@@ -60,5 +61,7 @@ for inputIterator = 1:4
 					"Model liniowy, " + inputLabel + " = " + u0(inputIterator) * coef_vals(jumpIterator)];
 			end
 			legend(legendLabels,'Location','eastoutside');
+			xlabel("t [min]")
+			ylabel(outputLabels(outputIterator) + " [" + outputUnits(outputIterator) + "]")
 	end
 end
