@@ -12,6 +12,8 @@ tfinal = 20;
 x0 = [C_A; T];
 u0 = [C_Ain; F_C; T_in; T_Cin];
 coef_vals  = [0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
+% coef_vals  = [0.8, 1, 1.2];
+% coef_vals  = [0.4, 1, 1.6];
 
 reactor       = Reactor();
 linearReactor = LinearReactor();

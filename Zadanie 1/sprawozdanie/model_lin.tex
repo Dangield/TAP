@@ -1,5 +1,6 @@
 \chapter{Model liniowy}
-w celu opracowania modelu liniowego obiektu wykonaliśmy linearyzację w zadanym punkcie pracy. Pamiętając, że pochodna w tym punkcie wynosi 0, otrzymaliśmy następujące równania.
+\section{Równania stanu}
+W celu opracowania modelu liniowego obiektu wykonaliśmy linearyzację w zadanym punkcie pracy. Pamiętając, że pochodna w tym punkcie wynosi 0, otrzymaliśmy następujące równania.
 
 \begin{equation}
 \left\{
@@ -11,7 +12,7 @@ $\quad + (T_{in} - T_{in0}) + (\frac{1.678\cdot (F_C)^{1.5}}{F_C+0.839\cdot (F_C
 \end{tabular}
 \right.
 \end{equation}
-Podstawiając wartości w punkcie praco (zmienne z indeksem 0) otrzymujemy:
+Podstawiając wartości w punkcie pracy (zmienne z indeksem 0) otrzymujemy:
 \begin{equation}
 \left\{
 \begin{tabular}{l}
@@ -29,7 +30,9 @@ $\frac{dT}{dt} = 852.7638\cdot C_A + 5.7693\cdot T -6.0732\cdot F_C + T_{in} + 5
 \end{tabular}
 \right.
 \end{equation}
-Mając model w postaci układu równań wykorzystaliśmy możliwości Matlaba do obliczania transmitancji (funkcja ss()). W tym celu określiliśmy macierze:
+\newpage
+\section{Transmitancja}
+Mając model w postaci układu równań wykorzystaliśmy możliwości Matlaba do obliczania transmitancji (funkcja $ss()$). W tym celu określiliśmy macierze:
 \begin{equation}
 	A=\left[
 	\begin{tabular}{c c}
@@ -83,3 +86,55 @@ Wyliczone transmitancje to:
 \begin{equation}
 \frac{T(s)}{T_{Cin}(s)} = \frac{5.342 s + 40.38}{s^2+1.79s+35.83}
 \end{equation}
+\newpage
+\section{Porównanie modelu nieliniowego i liniowego}
+Po zaimplementowaniu modelu w postaci równań stanu w Matlabie, wykonaliśmy eksperymenty polegające na zmianie wartości jednej ze zmiennych sterujących. Na wykresach od \ref{fig:lincacain0} do \ref{fig:lintfc0} przedstawione zostały przebiegi wyjść dla małych zmian zmiennych sterujących. Jak widać model ten radzi sobie w tym zakresie zadowalająco. Odchyły stężenia $C_A$ względem modelu nieliniowego nie są duże, i mieszczą się w zakresie $<-0.01;0.01>$. Różnica temperatury $T$ między modelami nie przekracza jednego stopnia Kelwina. Przebiegi dla obydwu modeli są także podobne kształtem.
+
+Inaczej przedstawia się sytuacja dla dużych skoków sterowania, przedstawiona na wykresach od \ref{fig:lincacain1} do \ref{fig:lintfc1}. Odchylenie modelu liniowego od nieliniowego jest ewidentnie większe, i  w większości przypadków kształt przebiegów nie pokrywa się pomiędzy modelami. Na szczególną uwagę zasługuje tu wykres \ref{fig:lintcain1}, ponieważ tylko na nim wartość końcowa wyjścia $T$ modelu liniowego jest zbliżona do wartości dla modelu nieliniowego. Oznacza to, że w teorii model liniowy powinien dosyć dobrze odwzorowywać wartość wyjścia $T$ przy skokach sterowania $C_{Ain}$.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/lin_cacain_0.eps}
+	\caption{Porównanie wyjścia $C_A$ modelu nieliniowego i liniowego dla skoku sterowania $C_{Ain}$ blisko punktu pracy}
+	\label{fig:lincacain0}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.8\linewidth]{plot/lin_tcain_0.eps}
+\caption{Porównanie wyjścia $T$ modelu nieliniowego i liniowego dla skoku sterowania $C_{Ain}$ blisko punktu pracy}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.8\linewidth]{plot/lin_cafc_0.eps}
+\caption{Porównanie wyjścia $C_A$ modelu nieliniowego i liniowego dla skoku sterowania $F_C$ blisko punktu pracy}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.8\linewidth]{plot/lin_tfc_0.eps}
+\caption{Porównanie wyjścia $T$ modelu nieliniowego i liniowego dla skoku sterowania $F_C$ blisko punktu pracy}
+\label{fig:lintfc0}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/lin_cacain_1.eps}
+	\caption{Porównanie wyjścia $C_A$ modelu nieliniowego i liniowego dla skoku sterowania $C_{Ain}$ daleko od punktu pracy}
+	\label{fig:lincacain1}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/lin_tcain_1.eps}
+	\caption{Porównanie wyjścia $T$ modelu nieliniowego i liniowego dla skoku sterowania $C_{Ain}$ daleko od punktu pracy}
+	\label{fig:lintcain1}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/lin_cafc_1.eps}
+	\caption{Porównanie wyjścia $C_A$ modelu nieliniowego i liniowego dla skoku sterowania $F_C$ daleko od punktu pracy}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/lin_tfc_1.eps}
+	\caption{Porównanie wyjścia $T$ modelu nieliniowego i liniowego dla skoku sterowania $F_C$ daleko od punktu pracy}
+	\label{fig:lintfc1}
+\end{figure}
