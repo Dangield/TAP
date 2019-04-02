@@ -33,7 +33,9 @@ for Ts  = [0.1 0.05 0.01]
 				plot(t, x(:,output))
 				stairs(t_d, x_d(:, output))
 				title(outputs(output) + ", skok na " + inputs(inputJump) + " = " + c0(inputJump, inputJump));
-				legend("Model ci¹g³y liniowy", "Model dyskretny, T_s = " + Ts);
+				xlabel('t[min]')
+				ylabel(outputs(output))
+				legend("Model ci¹g³y liniowy", "Model dyskretny, T_s = " + Ts, 'Location', 'best');
 		end
 	end
 end
