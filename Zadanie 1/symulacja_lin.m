@@ -57,6 +57,6 @@ for inputIterator = 1:4
 				legendLabels = [legendLabels, "Model nieliniowy, " + inputLabel + " = " + u0(inputIterator) * coef_vals(jumpIterator), ...
 					"Model liniowy, " + inputLabel + " = " + u0(inputIterator) * coef_vals(jumpIterator)];
 			end
-			legend(legendLabels);
+			legend(legendLabels,'Location','eastoutside');
 	end
 end
