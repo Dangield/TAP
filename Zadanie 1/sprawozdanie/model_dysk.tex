@@ -1,7 +1,7 @@
 \chapter{Model dyskretny}
 Dla przyjętego czasu próbkowania Tp = 0.01 min.
 \section{Równania stanu}
-Mając równania stanu modelu ciągłego wykorzystaliśmy obecną w Matlabie funkcję $c2d()$ w celu otrzymania równań stanu modelu dyskretnego.
+Wychodząc od równania stanu modelu ciągłego i wykorzystując obecną w Matlabie funkcję $c2d()$ otrzymaliśmy równania stanu modelu dyskretnego.
 \begin{equation}
 	\left\{
 	\begin{tabular}{l}
@@ -40,7 +40,7 @@ Mając transmitancję modelu ciągłego wykorzystaliśmy obecną w Matlabie funk
 \end{equation}
 \newpage
 \section{Porównanie modelu dyskretnego i ciągłego}
-Na poniższych wykresach (od \ref{fig:dys01} do \ref{fig:dys001}) porównaliśmy działanie modelu dyskretnego i ciągłego przy skokach obydwu sterowań dla trzech różnych okresów próbkowania: 0.1, 0.05 oraz 0.01 minuty. Dla największej z tych wartości dokładnie widać różnicę, między modelami, a mianowicie charakterystyczne schodki. Dla okresu 0.05 minuty schodki są jeszcze widoczne, ale wykres wygląda znacznie lepiej. Przy okresie próbkowania 0.01 minuty wykresy wykresy niemalże nakładają się na siebie, więc to właśnie tą wartość wybraliśmy jako optymalną.
+Na poniższych wykresach (od \ref{fig:dys01} do \ref{fig:dys001}) porównaliśmy działanie modelu dyskretnego i ciągłego przy skokach obydwu sterowań dla trzech różnych okresów próbkowania: 0.1, 0.05 oraz 0.01 minuty. Dla największej z tych wartości dokładnie widać różnicę, między modelami, a mianowicie charakterystyczne schodki. Dla okresu 0.05 minuty schodki są jeszcze widoczne, ale wykres wygląda znacznie lepiej. Przy okresie próbkowania 0.01 minuty wykresy wykresy niemalże nakładają się na siebie, więc to właśnie tę wartość wybraliśmy jako optymalną.
 \begin{figure}
 	\centering
 	\includegraphics[width=.8\linewidth]{plot/dysk_1.eps}
