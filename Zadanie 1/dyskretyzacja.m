@@ -23,7 +23,8 @@ for Ts  = [0.1 0.05 0.01]
 		[t, x] = linearReactor.simulate(x0, c0(:, inputJump), d0, t0, tfinal);
 
 		discreteTransferFunction = c2d(transferFunction, Ts);
-		discreteSpaceState       = ss(discreteTransferFunction);
+% 		discreteSpaceState       = ss(discreteTransferFunction);
+		discreteSpaceState       = c2d(stateSpaceModel, Ts);
 		disctreteReactor         = DiscreteReactor(discreteSpaceState);
 		[t_d, x_d] = disctreteReactor.simulate(x0, c0(:, inputJump), d0, t0, tfinal);
 
