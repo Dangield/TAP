@@ -1,6 +1,6 @@
 \chapter{Model liniowy}
 \section{Równania stanu}
-W celu opracowania modelu liniowego obiektu wykonaliśmy linearyzację w zadanym punkcie pracy. Pamiętając, że pochodna w tym punkcie wynosi 0, otrzymaliśmy następujące równania.
+W celu opracowania modelu liniowego obiektu wykonaliśmy linearyzację w zadanym punkcie pracy. Pamiętając, że pochodna w tym punkcie wynosi 0, otrzymaliśmy następujące równania:
 
 \begin{equation}
 \left\{
@@ -32,7 +32,7 @@ $\frac{dT}{dt} = 852.7638\cdot C_A + 5.7693\cdot T -6.0732\cdot F_C + T_{in} + 5
 \end{equation}
 \newpage
 \section{Transmitancja}
-Mając model w postaci układu równań wykorzystaliśmy możliwości Matlaba do obliczania transmitancji (funkcja $ss()$). W tym celu określiliśmy macierze:
+Mając model w postaci układu równań wykorzystaliśmy możliwości Matlaba do stworzenia obiektu reprezentującego te równania (obiekt $ss()$), a następnie obliczania transmitancji (obiekt $tf()$). Macierze równań stanu mają następującą postać:
 \begin{equation}
 	A=\left[
 	\begin{tabular}{c c}
