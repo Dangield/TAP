@@ -38,6 +38,23 @@ Mając transmitancję modelu ciągłego wykorzystaliśmy obecną w Matlabie funk
 \begin{equation}
 \frac{T(z)}{T_{Cin}(z)} = \frac{0.05492 z - 0.05092}{z^2-1.979z+0.9823}
 \end{equation}
+
+Odpowiedzi skokowe modeli dyskretnych w postaci zarówno równań stanu jak i transmitancji wyglądają identycznie, co widać na wykresach \ref{fig:step_ss} oraz \ref{fig:step_tf}. Można dzięki temu wnioskować, że transmitancje zostały wyznaczone prawidłowo.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/step_space_state.eps}
+	\caption{Odpowiedź skokowa modelu dyskretnego w postaci równań stanu}
+	\label{fig:step_ss}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{plot/step_transfer.eps}
+	\caption{Odpowiedź skokowa modelu dyskretnego w transmitancji}
+	\label{fig:step_tf}
+\end{figure}
+
 \newpage
 \section{Porównanie modelu dyskretnego i ciągłego}
 Na poniższych wykresach (od \ref{fig:dys01} do \ref{fig:dys001}) porównaliśmy działanie modelu dyskretnego i ciągłego przy skokach obydwu sterowań dla trzech różnych okresów próbkowania: 0.1, 0.05 oraz 0.01 minuty. Dla największej z tych wartości dokładnie widać różnicę, między modelami, a mianowicie charakterystyczne schodki. Dla okresu 0.05 minuty schodki są jeszcze widoczne, ale wykres wygląda znacznie lepiej. Przy okresie próbkowania 0.01 minuty wykresy wykresy niemalże nakładają się na siebie, więc to właśnie tę wartość wybraliśmy jako optymalną.

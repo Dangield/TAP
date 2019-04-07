@@ -11,6 +11,21 @@ tfinal = 10;
 x0 = [C_A; T];
 d0 = [T_in; T_Cin];
 c0 = [C_Ain * 1.2 C_Ain; F_C, F_C * 1.4];
+Ts = 0.01;
+
+discreteTransferFunction = c2d(transferFunction, Ts);
+discreteSpaceState       = c2d(stateSpaceModel, Ts);
+
+figure
+	step(discreteSpaceState);
+	title("OdpowiedŸ skokowa modelu w postaci równañ stanu")
+	set(gcf,'renderer','Painters')
+	
+figure
+	step(discreteTransferFunction);
+	title("OdpowiedŸ skokowa modelu w postaci transmitancji")
+	set(gcf,'renderer','Painters')
+	
 
 outputs = ["C_{A}", "T"];
 inputs = ["C_{Ain}", "F_C"];
@@ -23,7 +38,6 @@ for Ts  = [0.1 0.05 0.01]
 		[t, x] = linearReactor.simulate(x0, c0(:, inputJump), d0, t0, tfinal);
 
 		discreteTransferFunction = c2d(transferFunction, Ts);
-% 		discreteSpaceState       = ss(discreteTransferFunction);
 		discreteSpaceState       = c2d(stateSpaceModel, Ts);
 		disctreteReactor         = DiscreteReactor(discreteSpaceState);
 		[t_d, x_d] = disctreteReactor.simulate(x0, c0(:, inputJump), d0, t0, tfinal);
