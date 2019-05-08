@@ -1,3 +1,10 @@
+close all
+clear all
+clc
+addpath("../")
+
+consts
+
 C_A_w = 0.26;
 T_w = 393.9;
 
@@ -19,10 +26,10 @@ for i=0:Tp:50
 end
 
 figure(1)
-plot(t, total_x(:, 1))
+stairs(t, total_x(:, 1))
 title('C_A')
 figure(2)
-plot(t, total_x(:, 2))
+stairs(t, total_x(:, 2))
 title('T')
 total_x(end, :)
 
