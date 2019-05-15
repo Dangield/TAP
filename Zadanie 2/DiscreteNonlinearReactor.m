@@ -6,19 +6,18 @@ classdef DiscreteNonlinearReactor < handle
 		y;
 		d;
 		t;
-		Tp;
+		Tp = 1/60;
 		currentU;
 	end
 	
 	methods
-		function obj = DiscreteNonlinearReactor(Tp)
+		function obj = DiscreteNonlinearReactor()
 			global C_Ain F_C  C_A T  T_in T_Cin;
 			obj.u = [C_Ain, F_C];
 			obj.currentU = [C_Ain, F_C];
 			obj.y = [C_A, T];
 			obj.d = [T_in, T_Cin];
 			obj.t = 0;
-			obj.Tp = Tp;
 		end
 		
 		

@@ -5,8 +5,6 @@ addpath("../")
 
 consts
 
-Tp = 1/60;
-
 K = 0;          % Gain
 Ti = 0;         % Integration time
 Kd = 0;         % Derivation gain
@@ -18,7 +16,7 @@ Llim = -100;    % low limit
 AutoMan = 1;    % MAN when AutoMan equals to 0
 ManVal = 1;     % output in MAN mode;
 
-r = DiscreteNonlinearReactor(Tp);
+r = DiscreteNonlinearReactor();
 p1 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, AutoMan, ManVal);
 p2 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, AutoMan, ManVal);
 
@@ -26,10 +24,13 @@ p2 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, AutoMan, ManVal);
 p1.SetAutoMan(1,1)
 p2.SetAutoMan(1,1)
 
+p1.reTune(0, 0, 0, 0)
+p2.reTune(0, 0, 0, 0)
+
 %PID
 %reTune(K, Ti, Kd, Td)
-p1.reTune(15, 0.01, 40, 0.1)
-p2.reTune(0.01, 3, 0.2, 0.01)
+p1.reTune(1, 0.003, 100, 0.15)
+p2.reTune(0.01, 4, 0.1, 0.04)
 
 global C_A T C_Ain F_C;
 
@@ -39,16 +40,16 @@ u = [C_Ain F_C];
 yzad_log = yzad;
 
 
-for i=0:Tp:250
+for i=0:Tp:50
 	i
 	u2 = p1.calc(r.y(end, 1), yzad(1)) + F_C;
 	u1 = p2.calc(r.y(end, 2), yzad(2)) + C_Ain;
-	if (i >= 50)
-		yzad(2) = 400;
+	if (i >= 5)
+		yzad(2) = T + 1;
 	end
 	
-	if (i >= 150)
-		yzad(1) = 0.2;
+	if (i >= 20)
+		yzad(1) = C_A + 0.01;
 	end
 	r.currentU = [u1 u2];
     r.simulate()
