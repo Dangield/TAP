@@ -17,8 +17,8 @@ AutoMan = 1;    % MAN when AutoMan equals to 0
 ManVal = 1;     % output in MAN mode;
 
 r = DiscreteNonlinearReactor();
-p1 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, AutoMan, ManVal);
-p2 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, AutoMan, ManVal);
+p1 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, Dir, ManVal);
+p2 = classPID(K, Ti, Kd, Td, Tp, Hlim, Llim, Dir, ManVal);
 
 %SetAutoMan(obj, AutoMan, ManVal)
 p1.SetAutoMan(1,1)
@@ -29,8 +29,8 @@ p2.reTune(0, 0, 0, 0)
 
 %PID
 %reTune(K, Ti, Kd, Td)
-p1.reTune(1, 0.55, 80, 10)
-p2.reTune(0.002, 600, 0.2, 1.8)
+p1.reTune(10, 0, 0, 0)
+p2.reTune(0.01, 0, 0, 0)
 
 global C_A T C_Ain F_C;
 
@@ -39,17 +39,20 @@ u = [C_Ain F_C];
 
 yzad_log = yzad;
 
+p1.PV = C_A;
+p1.SP = C_A;
+p1.out = F_C;
 
-for i=0:Tp:3600
-	i
-	u2 = p1.calc(r.y(end, 1), yzad(1)) + F_C;
-	u1 = p2.calc(r.y(end, 2), yzad(2)) + C_Ain;
-% 	if (i >= 1200)
-% 		yzad(2) = 395;
-%     end
+
+for i=0:Tp:7200
+	u2 = p1.calc(r.y(end, 1), yzad(1));
+	u1 = p2.calc(r.y(end, 2), yzad(2));
+	if (i >= 2400)
+		yzad(2) = T + 1;
+	end
 	
 	if (i >= 600)
-		yzad(1) = 0.24;
+		yzad(1) = C_A + 0.01;
 	end
 	r.currentU = [u1 u2];
     r.simulate()
@@ -65,10 +68,8 @@ figure()
 		stairs(r.t, r.y(:, 1))
 		stairs(r.t, yzad_log(:, 1))
 		title(strcat('C_A, ', num2str(e1)))
-        ylim([0.2 0.3])
 	subplot(2, 1, 2)
 		hold on
 		stairs(r.t, r.y(:, 2))
 		stairs(r.t, yzad_log(:, 2))
 		title(strcat('T, ', num2str(e1)))
-        ylim([380 410])
