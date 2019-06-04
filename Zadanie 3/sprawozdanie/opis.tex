@@ -1,0 +1,49 @@
+\chapter{Opis otrzymanego modelu}
+
+W ramach tego projektu korzystaliśmy z modelu obiektu znanego jako reaktor przepływowy. Obiekt składa się z pojemnika wypełnionego cieczą z rozpuszczoną nieokreśloną substancją. Do pojemnika wpływa strumieniem $F_{in}$ ciecz o określonej temperaturze $T_{in}$ oraz stężeniu rozpuszczonej substancji $C_{Ain}$. W pojemniku jest określona ilość cieczy $V$ w określonej temperaturze $T$. Ciecz z pojemnika wypływa strumieniem $F$, zawierając stężenie $C_A$ rozpuszczonej substancji. Dodatkowo przez pojemnik przeprowadzona jest rura odpowiedzialna za chłodzenie bądź podgrzewanie, którą strumieniem $F_C$ płynie ciecz o temperaturze wejściowej $T_{Cin}$. Obiekt opisany jest następującymi równaniami:
+\begin{equation}
+	\left\{
+	\begin{tabular}{l}
+	$V \cdot \frac{dC_A}{dt}=F_{in} \cdot C_{Ain}-F \cdot C_A-V \cdot k_0 \cdot e^{-\frac{E}{R \cdot T}} \cdot C_A$\\
+	$V \cdot \rho \cdot c_p \cdot \frac{dT}{dt}=F_{in} \cdot \rho \cdot c_p \cdot T_{in}-F \cdot \rho \cdot c_p \cdot T+V \cdot h \cdot k_0 \cdot e^{-\frac{E}{R \cdot T}} \cdot C_A - \frac{a \cdot (F_C)^{b+1}}{F_C+\frac{a \cdot (F_C)^b}{2 \cdot \rho_c \cdot c_{pc}}} \cdot (T-T_{Cin})$
+	\end{tabular}
+	\right.
+\end{equation}
+W równaniach występują stałe o podanych wartościach:\\
+\begin{itemize}
+	\item $\rho=\rho_c=10^6\frac{g}{m^3}$
+	\item $c_p=c_{pc} = 1 \frac{cal}{g\cdot K}$
+	\item $k_0 = 10^{10} \frac{1}{min}$
+	\item $\frac{E}{R} = 8330,1 \frac{1}{K}$
+	\item $h = 130\cdot 10^6 \frac{cal}{kmol}$
+	\item $a = 1,678\cdot 10^6\frac{cal}{K\cdot m^3}$
+	\item $b = 0,5$
+\end{itemize}
+Otrzymaliśmy także dane odnośnie wartości zmiennych modelu w zadanym punkcie pracy układu:\\
+\begin{itemize}
+	\item $V=1m^3$
+	\item $F_{in} = F = 1 \frac{m^3}{min}$
+	\item $C_{Ain} = 2 \frac{kmol}{m^3}$
+	\item $F_C = 15 \frac{m^3}{min}$
+	\item $T_{in} = 323K$
+	\item $T_{Cin} = 365K$
+	\item $C_A = 0,26\frac{kmol}{m^3}$
+	\item $T = 393,9K$
+\end{itemize}
+W ramach zadania zmienne te podzielone zostały na 4 grupy:\\
+\begin{itemize}
+	\item stałe - $V,F,F_{in}$
+	\item regulowane - $C_A,T$
+	\item sterujące - $C_{Ain},F_C$
+	\item zakłócenia - $T_{in},T_{Cin}$
+\end{itemize}
+Po zastąpieniu stałych w równaniach liczbami, otrzymywany jest następujący układ równań:\\
+\begin{equation}
+	\left\{
+	\begin{tabular}{l}
+	$\frac{dC_A}{dt} = C_{Ain} - C_A - 10^{10}\cdot e^{-\frac{8330,1}{T}}\cdot C_A$\\
+	$\frac{dT}{dt} = T_{in} - T + 130\cdot 10^{10}\cdot e^{-\frac{8330,1}{T}}\cdot C_A-\frac{1,678\cdot (F_C)^{1,5}}{F_C+0,839\cdot (F_C)^{0,5}}(T-T_{Cin})$
+	\end{tabular}
+	\right.
+\end{equation}
+Ostatnią rzeczą jaka musiała zostać wzięta pod uwagę było dokładniejsze określenie wartości wyjść w punkcie pracy, ponieważ te podane w zadaniu były przybliżone. Proces ten został wykonany w pierwszej części projektu, a wartości wyjść wyniosły w przybliżeniu $C_A = 0,2646$ oraz $T = 393,9531$.
