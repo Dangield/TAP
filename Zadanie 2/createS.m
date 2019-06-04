@@ -9,7 +9,7 @@ addpath('./..')
 consts
 
 % TODO - use LINEAR REACTOR !!!
-obj = NonlinearReactor();
+obj = LinearReactor();
 
 workpoint = struct('u', [2; 15], 'y', [0.2646; 393.9521], 'd', [323; 365]);
 obj.resetToWorkPoint(workpoint);
@@ -18,10 +18,12 @@ sim_length = 1000;
 
 s = cell(obj.ny, obj.nu);
 
+start = 100;
+
 for n = 1:obj.nu
     u = workpoint.u.*ones(obj.nu, sim_length);
     y = workpoint.y.*ones(obj.ny, sim_length);
-    u(n, 10:end) = workpoint.u(n) + 1;
+    u(n, start:end) = workpoint.u(n) + 1;
     for k = 1:sim_length
         y(:, k) = obj.getOutput();
         obj.setControl(u(:, k));
@@ -29,7 +31,7 @@ for n = 1:obj.nu
     end
     obj.resetToWorkPoint(workpoint);
     for m = 1:obj.ny
-        s{m, n} = y(m, 11:end);
+        s{m, n} = y(m, start+1:end) - y(m, start);
     end
 end
 
