@@ -1,11 +1,11 @@
-classdef Reactor < AbstractObject
+classdef NonlinearReactor < AbstractObject
 	properties
 		u, y, d
 		uk, yk, dk
 	end
 	
 	methods
-		function self = Reactor()
+		function self = NonlinearReactor()
 			ny = 2; nu = 2; nd = 2; Ts = 1/60;
 			self@AbstractObject(ny, nu, nd, Ts);
 		end

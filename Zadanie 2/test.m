@@ -8,7 +8,7 @@ addpath('./..')
 
 consts
 
-obj = Reactor();
+obj = NonlinearReactor();
 
 workpoint = struct('u', [2; 15], 'y', [0.2646; 393.9521], 'd', [323; 365]);
 obj.resetToWorkPoint(workpoint);
@@ -17,7 +17,7 @@ sim_length = 1000;
 u = (workpoint.u.*ones(obj.nu, sim_length));
 y = (workpoint.y.*ones(obj.ny, sim_length));
 
-u(1, 500:1000) = 2.2;
+u(1, 500:1000) = 2.4;
 
 for k = 1:sim_length
     y(:, k) = obj.getOutput();
