@@ -22,7 +22,7 @@ $T_{k+1} =( T_{in_k} - T_k + 130\cdot 10^{10}\cdot e^{-\frac{8330,1}{T_k}}\cdot 
 \right.
 \end{equation}
 
-Mając tak przygotowane wzory przystąpiliśmy do implementacji, którą zaczęliśmy od utworzenia odpowiednich punktów wejściowych (4 punkty: 2 dla sterowania i 2 dla zakłóceń) i wyjściowych (2 punkty). Utworzone zostały punkty o następujących nazwach:
+Mając tak przygotowane wzory przystąpiliśmy do implementacji, którą rozpoczęliśmy od utworzenia odpowiednich punktów wejściowych (4 punkty: 2 dla sterowania i 2 dla zakłóceń) i wyjściowych (2 punkty). Utworzone zostały punkty o następujących nazwach(zgodnie z przyjętą konwencją nazewnictwa obejmującą numer grupy):
 \begin{itemize}
 	\item 3\_CAIN\_IN
 	\item 3\_FC\_IN
@@ -31,7 +31,7 @@ Mając tak przygotowane wzory przystąpiliśmy do implementacji, którą zaczęl
 	\item 3\_CA\_OUT
 	\item 3\_T\_OUT
 \end{itemize}
-Punkty odpowiadające sterowaniom oraz wyjściom obiektu zostały następnie przypisane odpowiednio do bloków wejść i wyjść wewnątrz arkusza projektowego. Punkty zakłóceń zadane zostały poprzez użycie bloków AVALGEN. Dodatkowo sterowania podłączone zostały poprzez blok TRANSFER sterowany sygnałem binarnym. Blok ten określa czy w danej chwili regulator pracuje w trybie ręcznym czy też automatycznym.
+Punkty odpowiadające sterowaniom oraz wyjściom obiektu zostały następnie przypisane odpowiednio do bloków wejść i wyjść wewnątrz arkusza projektowego. Punkty zakłóceń zadane zostały poprzez użycie bloków AVALGEN. Dodatkowo sterowania podłączone zostały poprzez blok TRANSFER sterowany sygnałem binarnym. Blok ten określa, czy w danej chwili regulator pracuje w trybie ręcznym czy też automatycznym.
 
 Po umieszczeniu wejść oraz wyjść modelu na arkuszu nadeszła pora na implementację samego obiektu. W tym celu wykorzystaliśmy bloki CALCBLOCK umożliwiające dokonywanie obliczeń z wykorzystaniem do 18 zmiennych wejściowych, z których to wejść nasz model wykorzystywał jedynie 6. Dla każdego użytego bloku, jako wejścia od IN1 do IN6 posłużyły nam kolejno: $C_{Ain}, F_C, T_{in}, T_{Cin}, C_A$ oraz $T$. Implementacja pierwszego równania obyła się bez przeszkód. Jest ona przedstawiona na poniższym rysunku.
 
@@ -42,7 +42,7 @@ Po umieszczeniu wejść oraz wyjść modelu na arkuszu nadeszła pora na impleme
 	\caption{Formuła pierwszego równania modelu wewnątrz CALCBLOCK}
 \end{figure}
 
-Niewielki problem wystąpił podczas implementacji równania drugiego wyjścia modelu. Ze względu na ograniczenie nałożone na ilość znaków mogących się znaleźć wewnątrz formuły bloku CALCBLOK, działanie to musiało być przez nas podzielone na dwa bloki. W pierwszym z nich umieszczony został fragment: $T_{in_k} - T_k + 130\cdot 10^{10}\cdot e^{-\frac{8330,1}{T_k}}\cdot C_{A_k}$. Pozostała część zmieściła się w drugim. W celu wyraźnego odgraniczenia wyjścia pierwszego bloku od zmiennych procesu, zostało one wprowadzone do drugiego bloku jako IN18. Obydwa bloki zostały także odpowiednio połączone, tak aby kalkulacje w bloku drugim zachodziły zawsze po kalkulacjach bloku pierwszego. Zawartość obydwu bloków przedstawiona została na rysunkach poniżej.
+Niewielki problem wystąpił podczas implementacji równania drugiego wyjścia modelu. Ze względu na ograniczenie nałożone na ilość znaków mogących się znaleźć wewnątrz formuły bloku CALCBLOK, działanie to musiało być przez nas podzielone na dwa bloki. W pierwszym z nich umieszczony został fragment: $T_{in_k} - T_k + 130\cdot 10^{10}\cdot e^{-\frac{8330,1}{T_k}}\cdot C_{A_k}$. Pozostałą część równania umieściliśmy w drugim. W celu wyraźnego odgraniczenia wyjścia pierwszego bloku od zmiennych procesu, zostało one wprowadzone do drugiego bloku jako IN18. Obydwa bloki zostały także odpowiednio połączone, tak aby kalkulacje w bloku drugim zachodziły zawsze po kalkulacjach bloku pierwszego, gdyż wykorzystujemy jego wyliczoną wartość. Zawartość obydwu bloków przedstawiona została na rysunkach poniżej.
 
 \begin{figure}[h!]
 	\centering
@@ -58,7 +58,7 @@ Niewielki problem wystąpił podczas implementacji równania drugiego wyjścia m
 	\caption{Formuła wewnątrz drugiego bloku CALCBLOCK dla drugiego równania modelu}
 \end{figure}
 
-Po odpowiednim połączeniu wszystkich elementów otrzymaliśmy działający model zadanego dla nas obiektu. W celu jego przetestowania wykonaliśmy skok sterowania $C_{Ain}$ do wartości 1,6. Obiekt zachował się zgodnie z oczekiwaniami, a wartości wyjścia zbiegły do oczekiwanych. Poniżej zamieszczamy wykresy otrzymane w wyniku tego testu.
+Po odpowiednim połączeniu wszystkich elementów otrzymaliśmy działający model zadanego dla nas obiektu. W celu jego przetestowania wykonaliśmy skok sterowania $C_{Ain}$ do wartości 1,6. Obiekt zachował się zgodnie z oczekiwaniami, a wartości wyjścia zbiegły do spodziewanych. Wynik zachowaliśmy w pliku csv, do późniejszego rysowania wykresu. Poniżej zamieszczamy wykresy otrzymane w wyniku tej symulacji.
 
 \begin{figure}[h!]
 	\centering
