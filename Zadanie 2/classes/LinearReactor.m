@@ -37,7 +37,7 @@ classdef LinearReactor < AbstractObject
 		function shiftArrays(self)
 			self.u = circshift(self.u, [0 1]);
 			self.y = circshift(self.y, [0 1]);
-            self.d = circshift(self.y, [0 1]);
+            self.d = circshift(self.d, [0 1]);
 			
 			self.u(:, 1) = self.uk;
 			self.y(:, 1) = self.yk;
@@ -47,13 +47,12 @@ classdef LinearReactor < AbstractObject
 		function simulate(self)
 			global C_Ain F_C T_in T_Cin C_A T;
 			lin_x0 = self.yk - [C_A; T];
-			lin_c0 = self.uk - [C_Ain; F_C];
+			lin_c0 = self.uk' - [C_Ain; F_C];
 			lin_d0 = self.dk - [T_in; T_Cin];
 			
 			x = self.A * lin_x0 + self.B*[lin_c0; lin_d0];
 			y = self.C * x;
-			
-
+            
 			y(1) = y(1) + C_A;
 			y(2) = y(2) + T;
 			
@@ -63,7 +62,8 @@ classdef LinearReactor < AbstractObject
 		function resetToWorkPoint(self, workPoint)
 			self.uk = workPoint.u;
 			self.yk = workPoint.y; 
-			self.dk = workPoint.d; 
+			self.dk = workPoint.d;
+
 
 			self.u = self.uk*ones(1, 5);
 			self.y = self.yk*ones(1, 5);

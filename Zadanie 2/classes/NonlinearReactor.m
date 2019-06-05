@@ -26,7 +26,7 @@ classdef NonlinearReactor < AbstractObject
 		function shiftArrays(self)
 			self.u = circshift(self.u, [0 1]);
 			self.y = circshift(self.y, [0 1]);
-            self.d = circshift(self.y, [0 1]);
+            self.d = circshift(self.d, [0 1]);
 			
 			self.u(:, 1) = self.uk;
 			self.y(:, 1) = self.yk;
@@ -43,7 +43,10 @@ classdef NonlinearReactor < AbstractObject
 			Ca = (F_in*input(1)/V - F*x(1)/V - k_0*exp(-E_R/x(2))*x(1))*self.Ts + x(1);
 			T = (F_in*disturbance(1)/V - F*x(2)/V + h*k_0*exp(-E_R/x(2))*x(1)/(Ro*c_p) - a*(input(2))^(b+1)/((input(2)+ a*(input(2))^b/(2*Ro_c*c_pc))*(V*Ro*c_p))*(x(2)-disturbance(2)))*self.Ts + x(2);
 			self.yk = [Ca; T];
-		end
+        end
+        
+%         function setDisturbance(self, d)
+%             self.dk = d
 		
 		function resetToWorkPoint(self, workPoint)
 			self.uk = workPoint.u;
