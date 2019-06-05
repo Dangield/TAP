@@ -1,6 +1,6 @@
 clear;
 close all;
-% clc;
+clc;
 
 addpath('./abstraction')
 addpath('./classes')
