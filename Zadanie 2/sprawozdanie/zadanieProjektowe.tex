@@ -9,7 +9,6 @@ Drugim etapem było dobranie nastaw regulatorów. Podczas dobierania nastaw korz
 
 Trzecim i ostatnim etapem było przetestowanie nastrojonego układu regulacji dla obiektu nieliniowego. Efekty tego procesu dla różnych zmian wartości zadanej i zakłóceń przedstawiliśmy na wykresach poniżej. Dla każdego przebiegu modelu nieliniowego zamieściliśmy także przebieg dla modelu zlinearyzowanego w celach porównawczych. O ile model liniowy poradził sobie znakomicie we wszystkich sytuacjach, tak model nieliniowy nie do końca. Na rysunku \ref{ch2:pid4} widać wyraźnie, że w niektórych dla dużego skoku zakłócenia $T$ model ten nie poradził sobie z utrzymaniem wartości zadanej.
 
-
 \begin{equation}
 \frac{C_A(s)}{C_{Ain}(s)} = \frac{s-5,769}{s^2+1,79s+35,83}
 \end{equation}
@@ -143,40 +142,40 @@ Trzecim i ostatnim etapem było przetestowanie nastrojonego układu regulacji dl
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/yDMC.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmcana}
 	\caption{Regulacja DMC analityczna - wyjście na tle wartości zadanej}
 \end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/uDMC.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmcanaster}
 	\caption{Regulacja DMC analityczna - sterowanie}
 \end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/yDMCnum.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmcnum}
 	\caption{Regulacja DMC numeryczna - wyjście na tle wartości zadanej}
 \end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/uDMCnum.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmcnumster}
 	\caption{Regulacja DMC numeryczna - sterowanie}
 \end{figure}
 \newpage
 Działanie prezentowanych powyżej algorytmów najłatwiej porównać będzie prezentując je na wspólnym rysunku. 
-Zgodnie z oczekiwaniami, regulacja przebieg w podobny sposób dla obu implementacji regulatora. W obu przypadkach występują oscylacje wyjścia przy dużych skokach wartości zadanej dla wyjścia T procesu, dla niewielkich skoków wartości zadanej, regulatory porównywalnie szybko sprowadzają wartość wyjścia T do zadanego poziomu. Wyjście CA również zachowuje porównywaly przebied przy zastosowaniu regulatora analitycznego, czy numerycznego. Ta zmienna wyjściowa, nieco wrażliwsza w regulacji, a oba typy regulatorów spowodowały zbliżony, a często pokrywający się przebieg, z podobnymi wysokościami przeregulowań.
+Zgodnie z oczekiwaniami, regulacja przebieg w podobny sposób dla obu implementacji regulatora. W obu przypadkach występują oscylacje wyjścia przy dużych skokach wartości zadanej dla wyjścia T procesu. Dla niewielkich skoków, regulatory porównywalnie szybko sprowadzają wartość wyjścia T do zadanego poziomu. Wyjście CA również zachowuje porównywalny przebieg przy zastosowaniu regulatora analitycznego, czy numerycznego. Ta zmienna wyjściowa, nieco wrażliwsza w regulacji, a oba typy regulatorów spowodowały zbliżony, a często pokrywający się przebieg, z podobnymi wysokościami przeregulowania.
 Należy jednak zaznaczyć, że mimo podobieństwa wyników i przebiegu sterowań, obliczenia dla algorytmu numerycznego trwały znacznie dłużej niż dla analitycznego.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/uComparedDMC.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmc}
 	\caption{Regulacja DMC analityczna i numeryczna - sterowanie}
 \end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.6\linewidth]{img/yComparedDMC.png}
-	\label{ch2:Zadanie}
+	\label{ch2:dmcster}
 	\caption{Regulacja DMC analityczna i numeryczna - wyjścia}
 \end{figure}
