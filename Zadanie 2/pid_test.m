@@ -6,7 +6,7 @@ addpath('./abstraction')
 addpath('./classes')
 addpath('./..')
 
-sim_length = 2000;
+sim_length = 1000;
 
 consts
 
@@ -16,7 +16,7 @@ consts
 % transferFunction = tf(noPerturbsStateSpaceModel)
 
 
-params = {struct('Kp', -0.4, 'Ti', 0.1, 'Td', 0.5), struct('Kp', 0.1, 'Ti', 0.5, 'Td', 0.1)};
+params = {struct('Kp', 2, 'Ti', 0.03, 'Td', 2), struct('Kp', 0.1, 'Ti', 0.5, 'Td', 0.1)};
 
 %% Mała zmiana w C_A
 % obj = NonlinearReactor();
@@ -36,7 +36,7 @@ setY = [0.29; 393.9521].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -84,7 +84,7 @@ setY = [0.37; 393.9521].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -132,7 +132,7 @@ setY = [C_A; 395].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -180,7 +180,7 @@ setY = [C_A; 425].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -228,7 +228,7 @@ setY = [C_A; T].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -276,7 +276,7 @@ setY = [C_A; T].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -324,7 +324,7 @@ setY = [C_A; T].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
@@ -372,7 +372,7 @@ setY = [C_A; T].*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y(:, k) = output;
-    control = reg.calculate(output, setY(:, k), []) + [C_Ain, F_C];
+    control = flipud(reg.calculate(output, setY(:, k), []) + [F_C; C_Ain]);
     if k < 100
     end
     u(:, k) = control';
