@@ -52,7 +52,7 @@ y_pid = workpoint.y.*ones(obj.ny, sim_length);
 for k = 1:sim_length
     output = obj.getOutput();
     y_pid(:, k) = output;
-    control = flipud(pid.calculate(output, setPoints(:, k)));
+    control = flipud(pid.calculate(output, setPoints(:, k), []) + [F_C; C_Ain]);
     u_pid(:, k) = control';
     obj.setControl(control);
     obj.nextIteration();
