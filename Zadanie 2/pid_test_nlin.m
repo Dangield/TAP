@@ -6,7 +6,7 @@ addpath('./abstraction')
 addpath('./classes')
 addpath('./..')
 
-sim_length = 6000;
+sim_length = 2000;
 
 consts
 
@@ -16,7 +16,8 @@ consts
 % transferFunction = tf(noPerturbsStateSpaceModel)
 
 
-params = {struct('Kp', -0.1, 'Ti', 0.1, 'Td', 0.1), struct('Kp', 0.0, 'Ti', 0.5, 'Td', 0.1)};
+% params = {struct('Kp', -0.1, 'Ti', 0.1, 'Td', 0.1), struct('Kp', 0.0, 'Ti', 0.5, 'Td', 0.1)};
+params = {struct('Kp', -0.4, 'Ti', 0.1, 'Td', 0.5), struct('Kp', 0.1, 'Ti', 0.5, 'Td', 0.1)};
 
 %% Mała zmiana w C_A
 obj = NonlinearReactor();
