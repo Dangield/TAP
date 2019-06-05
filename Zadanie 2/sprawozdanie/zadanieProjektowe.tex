@@ -143,7 +143,7 @@ Zadanym dla nas do implementacji algorytmem predykcyjnym jest DMC. Jego implemen
 \begin{equation}
 	\frac{1}{30s+1}
 \end{equation}
-Odpowiedź skokowa obiektu oraz wyniki regulacji przedstawione są na poniższych wykresach \ref{ch2:skoks}, \ref{ch2:dmcanas} oraz \ref{ch2:dmcanasters}. Jak było przewidywane dla stałych N=100, Nu=10, Tp=1s oraz $\lambda$=0 obiekt osiągnął wartość zadaną w jednym kroku.
+Odpowiedź skokowa obiektu oraz wyniki regulacji przedstawione są na poniższych wykresach \ref{ch2:skoks}, \ref{ch2:dmcanas} oraz \ref{ch2:dmcanasters}. Jak było przewidywane dla stałych N=100, Nu=10, Tp=1s oraz $\lambda$=0 obiekt osiągnął wartość zadaną w jednym kroku. Zdecydowaliśmy się także zawrzeć następujące ograniczenia: $U_{min}$ = [0,1 0,1], $U_{max}$ = [4 30], $\Delta U_{max}$ = [1 2].
 
 \begin{figure}[h!]
 	\centering
@@ -200,9 +200,8 @@ Pozostało jeszcze porównać działanie regulatora predykcyjnego z działaniem 
 \caption{Porównanie DMC i PID - sterowania}
 \end{figure}
 
-
-
 \section{Regulacja DMC - numeryczny}
+W celu implementacji numerycznego regulatora DMC posłużyliśmy się metodą quadprog. Został on zrealizowany tak samo jak zaprezentowane to było w części wykładowej. Skorzystaliśmy także z wygenerowanych już dla algorytmu analitycznego odpowiedzi skokowych. Wszystkie horyzonty, parametry regulatora oraz ograniczenia także pozostawiliśmy takie same. Przebieg działania algorytmu numerycznego przedstawiliśmy na poniższych wykresach.
 
 \begin{figure}[h!]
 	\centering
@@ -217,18 +216,16 @@ Pozostało jeszcze porównać działanie regulatora predykcyjnego z działaniem 
 	\caption{Regulacja DMC numeryczna - sterowanie}
 \end{figure}
 \newpage
-Działanie prezentowanych powyżej algorytmów najłatwiej porównać będzie prezentując je na wspólnym rysunku. 
-Zgodnie z oczekiwaniami, regulacja przebieg w podobny sposób dla obu implementacji regulatora. W obu przypadkach występują oscylacje wyjścia przy dużych skokach wartości zadanej dla wyjścia T procesu. Dla niewielkich skoków, regulatory porównywalnie szybko sprowadzają wartość wyjścia T do zadanego poziomu. Wyjście CA również zachowuje porównywalny przebieg przy zastosowaniu regulatora analitycznego, czy numerycznego. Ta zmienna wyjściowa, nieco wrażliwsza w regulacji, a oba typy regulatorów spowodowały zbliżony, a często pokrywający się przebieg, z podobnymi wysokościami przeregulowania.
-Należy jednak zaznaczyć, że mimo podobieństwa wyników i przebiegu sterowań, obliczenia dla algorytmu numerycznego trwały znacznie dłużej niż dla analitycznego.
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=.7\linewidth]{img/uComparedDMC.png}
-	\label{ch2:dmc}
-	\caption{Regulacja DMC analityczna i numeryczna - sterowanie}
-\end{figure}
+Mając regulator numeryczny należałoby zatem porównać go z analitycznym. Działanie prezentowanych powyżej algorytmów DMC najłatwiej porównać będzie prezentując je na wspólnym rysunku. Zgodnie z oczekiwaniami, regulacja przebieg w podobny sposób dla obu implementacji regulatora. W obu przypadkach występują oscylacje wyjścia przy dużych skokach wartości zadanej dla wyjścia T procesu. Dla niewielkich skoków, regulatory porównywalnie szybko sprowadzają wartość wyjścia T do zadanego poziomu. Wyjście CA również zachowuje porównywalny przebieg przy zastosowaniu regulatora analitycznego, czy numerycznego. Ta zmienna wyjściowa, nieco wrażliwsza w regulacji, a oba typy regulatorów spowodowały zbliżony, a często pokrywający się przebieg, z podobnymi wysokościami przeregulowania.Należy jednak zaznaczyć, że mimo podobieństwa wyników i przebiegu sterowań, obliczenia dla algorytmu numerycznego trwały znacznie dłużej niż dla analitycznego.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=.7\linewidth]{img/yComparedDMC.png}
 	\label{ch2:dmcster}
 	\caption{Regulacja DMC analityczna i numeryczna - wyjścia}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{img/uComparedDMC.png}
+	\label{ch2:dmc}
+	\caption{Regulacja DMC analityczna i numeryczna - sterowanie}
 \end{figure}
