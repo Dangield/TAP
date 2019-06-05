@@ -27,6 +27,9 @@ classdef LinearReactor < AbstractObject
 		
 		function setControl(self, control)
 			self.uk = control;
+			if (size(self.uk, 2) > 1)
+				self.uk = self.uk';
+			end
 		end
 			
 		function nextIteration(self)
@@ -47,7 +50,7 @@ classdef LinearReactor < AbstractObject
 		function simulate(self)
 			global C_Ain F_C T_in T_Cin C_A T;
 			lin_x0 = self.yk - [C_A; T];
-			lin_c0 = self.uk' - [C_Ain; F_C];
+			lin_c0 = self.uk - [C_Ain; F_C];
 			lin_d0 = self.dk - [T_in; T_Cin];
 			
 			x = self.A * lin_x0 + self.B*[lin_c0; lin_d0];
