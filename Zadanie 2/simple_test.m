@@ -20,7 +20,7 @@ dumax = 100;
 D = 6;
 N = 100;
 Nu = 10;
-lambda = 0.0001;
+lambda = 0;
 psii = 1;
 sim_length = 100;
 

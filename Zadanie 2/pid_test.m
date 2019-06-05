@@ -239,24 +239,24 @@ end
 figure
 subplot(2, 1, 1)
 stairs(u(1, :), 'r');
-title('C_{Ain}, Zakłócenie T_{in}=325, model liniowy')
+title('C_{Ain}, Zak��cenie T_{in}=325, model liniowy')
 
 subplot(2, 1, 2)
 stairs(u(2, :), 'r');
-title('F_{C}, Zakłócenie T_{in}=325, model liniowy')
+title('F_{C}, Zak��cenie T_{in}=325, model liniowy')
 
 figure;
 subplot(2, 1, 1);
 hold on;
 stairs(setY(1, :), 'b');
 stairs(y(1, :), 'r');
-title('C_A, Zakłócenie T_{in}=325, model liniowy')
+title('C_A, Zak��cenie T_{in}=325, model liniowy')
 
 subplot(2, 1, 2);
 hold on;
 stairs(setY(2, :), 'b');
 stairs(y(2, :), 'r');
-title('T, Zakłócenie T_{in}=325, model liniowy')
+title('T, Zak��cenie T_{in}=325, model liniowy')
 
 %% Duża zmiana w T_{in}
 % obj = NonlinearReactor();
@@ -287,24 +287,24 @@ end
 figure
 subplot(2, 1, 1)
 stairs(u(1, :), 'r');
-title('C_{Ain}, Zakłócenie T_{in}=343, model liniowy')
+title('C_{Ain}, Zak��cenie T_{in}=343, model liniowy')
 
 subplot(2, 1, 2)
 stairs(u(2, :), 'r');
-title('F_{C}, Zakłócenie T_{in}=343, model liniowy')
+title('F_{C}, Zak��cenie T_{in}=343, model liniowy')
 
 figure;
 subplot(2, 1, 1);
 hold on;
 stairs(setY(1, :), 'b');
 stairs(y(1, :), 'r');
-title('C_A, Zakłócenie T_{in}=343, model liniowy')
+title('C_A, Zak��cenie T_{in}=343, model liniowy')
 
 subplot(2, 1, 2);
 hold on;
 stairs(setY(2, :), 'b');
 stairs(y(2, :), 'r');
-title('T, Zakłócenie T_{in}=343, model liniowy')
+title('T, Zak��cenie T_{in}=343, model liniowy')
 
 %% Mała zmiana w T_Cin
 % obj = NonlinearReactor();
@@ -335,24 +335,24 @@ end
 figure
 subplot(2, 1, 1)
 stairs(u(1, :), 'r');
-title('C_{Ain}, Zakłócenie T_Cin=367, model liniowy')
+title('C_{Ain}, Zak��cenie T_Cin=367, model liniowy')
 
 subplot(2, 1, 2)
 stairs(u(2, :), 'r');
-title('F_{C}, Zakłócenie T_Cin=367, model liniowy')
+title('F_{C}, Zak��cenie T_Cin=367, model liniowy')
 
 figure;
 subplot(2, 1, 1);
 hold on;
 stairs(setY(1, :), 'b');
 stairs(y(1, :), 'r');
-title('C_A, Zakłócenie T_Cin=367, model liniowy')
+title('C_A, Zak��cenie T_Cin=367, model liniowy')
 
 subplot(2, 1, 2);
 hold on;
 stairs(setY(2, :), 'b');
 stairs(y(2, :), 'r');
-title('T, Zakłócenie T_Cin=367, model liniowy')
+title('T, Zak��cenie T_Cin=367, model liniowy')
 
 %% Duża zmiana w T_Cin
 % obj = NonlinearReactor();
@@ -383,21 +383,21 @@ end
 figure
 subplot(2, 1, 1)
 stairs(u(1, :), 'r');
-title('C_{Ain}, Zakłócenie T_Cin=385, model liniowy')
+title('C_{Ain}, Zak��cenie T_Cin=385, model liniowy')
 
 subplot(2, 1, 2)
 stairs(u(2, :), 'r');
-title('F_{C}, Zakłócenie T_Cin=385, model liniowy')
+title('F_{C}, Zak��cenie T_Cin=385, model liniowy')
 
 figure;
 subplot(2, 1, 1);
 hold on;
 stairs(setY(1, :), 'b');
 stairs(y(1, :), 'r');
-title('C_A, Zakłócenie T_Cin=385, model liniowy')
+title('C_A, Zak��cenie T_Cin=385, model liniowy')
 
 subplot(2, 1, 2);
 hold on;
 stairs(setY(2, :), 'b');
 stairs(y(2, :), 'r');
-title('T, Zakłócenie T_Cin=385, model liniowy')
+title('T, Zak��cenie T_Cin=385, model liniowy')

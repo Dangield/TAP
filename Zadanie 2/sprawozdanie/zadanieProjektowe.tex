@@ -138,28 +138,81 @@ Trzecim i ostatnim etapem było przetestowanie nastrojonego układu regulacji dl
 \caption{Regulacja PID - skok zakłócenia $T_{Cin}$ do 385}
 \end{figure}
 
-\section{Regulacja DMC}
+\section{Regulacja DMC - analityczny}
+Zadanym dla nas do implementacji algorytmem predykcyjnym jest DMC. Jego implementacja nie przysporzyła nam większych problemów. W celu przetestowania jej poprawności, wykorzystaliśmy DMC do wyregulowania obiektu zadanego przez prowadzącego o transmitancji ciągłej:
+\begin{equation}
+	\frac{1}{30s+1}
+\end{equation}
+Odpowiedź skokowa obiektu oraz wyniki regulacji przedstawione są na poniższych wykresach \ref{ch2:skoks}, \ref{ch2:dmcanas} oraz \ref{ch2:dmcanasters}. Jak było przewidywane dla stałych N=100, Nu=10, Tp=1s oraz $\lambda$=0 obiekt osiągnął wartość zadaną w jednym kroku.
+
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/yDMC.png}
+	\includegraphics[width=.7\linewidth]{img/skoks.eps}
+	\label{ch2:skoks}
+	\caption{Odpowiedź skokowa dla obiektu od prowadzącego}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{img/yS.eps}
+	\label{ch2:dmcanas}
+	\caption{Regulacja DMC analityczna dla obiektu od prowadzącego - wyjście}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=.7\linewidth]{img/uS.eps}
+\label{ch2:dmcanasters}
+\caption{Regulacja DMC analityczna dla obiektu od prowadzącego - sterowanie}
+\end{figure}
+
+\newpage
+Wiedząc, że algorytm regulacji działa poprawnie, przystosowaliśmy go dla naszego modelu obiektu. Odpowiedzi skokowe zostały przez nas wygenerowane z użyciem modelu zlinearyzowanego. Następnie dokonaliśmy regulacji na modelu nieliniowym. Parametry regulatora ustawiliśmy na następujące wartości: D = 800, N = 100, Nu = 80, $\lambda$ = [2 0,1], $\psi$ = 1. Odpowiedzi skokowe oraz działanie regulatora dla obiektu przedstawiono na poniższych wykresach od \ref{ch2:skok} do \ref{ch2:dmcanaster}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{img/skok.eps}
+	\label{ch2:skok}
+	\caption{Odpowiedź skokowa}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{img/yDMC.png}
 	\label{ch2:dmcana}
 	\caption{Regulacja DMC analityczna - wyjście na tle wartości zadanej}
 \end{figure}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/uDMC.png}
+	\includegraphics[width=.7\linewidth]{img/uDMC.png}
 	\label{ch2:dmcanaster}
 	\caption{Regulacja DMC analityczna - sterowanie}
 \end{figure}
+\newpage
+Pozostało jeszcze porównać działanie regulatora predykcyjnego z działaniem regulatora PID z poprzedniego podpunktu zadania. Efekt takowego porównania przedstawiony został na wykresie poniżej. Jak widać DMC radzi sobie dużo lepiej, ponieważ znacznie szybciej zbiega do wartości zadanej.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/yDMCnum.png}
+	\includegraphics[width=.7\linewidth]{img/dmcvspid.eps}
+	\label{ch2:dmcvspid}
+	\caption{Porównanie DMC i PID - wyjścia}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=.7\linewidth]{img/dmcvspidster}
+\label{ch2:dmcvspidster}
+\caption{Porównanie DMC i PID - sterowania}
+\end{figure}
+
+
+
+\section{Regulacja DMC - numeryczny}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{img/yDMCnum.png}
 	\label{ch2:dmcnum}
 	\caption{Regulacja DMC numeryczna - wyjście na tle wartości zadanej}
 \end{figure}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/uDMCnum.png}
+	\includegraphics[width=.7\linewidth]{img/uDMCnum.png}
 	\label{ch2:dmcnumster}
 	\caption{Regulacja DMC numeryczna - sterowanie}
 \end{figure}
@@ -169,13 +222,13 @@ Zgodnie z oczekiwaniami, regulacja przebieg w podobny sposób dla obu implementa
 Należy jednak zaznaczyć, że mimo podobieństwa wyników i przebiegu sterowań, obliczenia dla algorytmu numerycznego trwały znacznie dłużej niż dla analitycznego.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/uComparedDMC.png}
+	\includegraphics[width=.7\linewidth]{img/uComparedDMC.png}
 	\label{ch2:dmc}
 	\caption{Regulacja DMC analityczna i numeryczna - sterowanie}
 \end{figure}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.6\linewidth]{img/yComparedDMC.png}
+	\includegraphics[width=.7\linewidth]{img/yComparedDMC.png}
 	\label{ch2:dmcster}
 	\caption{Regulacja DMC analityczna i numeryczna - wyjścia}
 \end{figure}
