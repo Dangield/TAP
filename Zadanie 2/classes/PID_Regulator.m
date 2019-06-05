@@ -66,7 +66,7 @@ classdef PID_Regulator < AbstractRegulator
 					control(self.config(i)) = uk(i);
 				end
 			else
-				control = uk;
+				control = uk';
 			end
 		end
 	end
