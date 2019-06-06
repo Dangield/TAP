@@ -9,9 +9,9 @@ addpath('./..')
 consts
 
 % TODO - use LINEAR REACTOR !!!
-obj = LinearReactor();
+obj = SimpleObject2();
 
-workpoint = struct('u', [2; 15], 'y', [0.2646; 393.9521], 'd', [323; 365]);
+workpoint = struct('u', [0; 0], 'y', [0.0; 0.0], 'd', [0; 0]);
 obj.resetToWorkPoint(workpoint);
 
 sim_length = 1000;
@@ -35,7 +35,7 @@ for n = 1:obj.nu
     end
 end
 
-save('./data/s.mat', 's');
+save('./data/s2.mat', 's');
 figure;
 subplot(2, 2, 1);
     hold on;

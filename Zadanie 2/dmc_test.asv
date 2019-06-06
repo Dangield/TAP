@@ -13,9 +13,13 @@ obj = NonlinearReactor();
 workpoint = struct('u', [2; 15], 'y', [0.2646; 393.9521], 'd', [323; 365]);
 obj.resetToWorkPoint(workpoint);
 
-umin = [0.1; 0.1];
-umax = [100; 100];
-dumax = [100; 100];
+% umin = [-Inf; -Inf];
+% umax = [Inf; Inf];
+% dumax = [Inf; Inf];
+
+umin = [];
+umax = [];
+dumax = [Inf; Inf];
 
 D = 800;
 N = 100;

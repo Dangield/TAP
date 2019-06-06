@@ -8,10 +8,7 @@ classdef Numeric_DMC_Regulator < AbstractRegulator
 		function self = Numeric_DMC_Regulator(object, workpoint, s, D, N, Nu, lambda, psii, umin, umax, dumax)
 			ny = object.ny;
 			nu = object.nu;
-			umin = [0; 0];
-			umax = [4; 30];
-			dumax = [0.5; 1];
-			
+
 			S = self.build_S(ny, nu, s, D);
 			M = self.build_M(ny, nu, N, Nu, S);
 			Lambda = self.build_Lambda(nu, Nu, lambda);
@@ -54,9 +51,9 @@ classdef Numeric_DMC_Regulator < AbstractRegulator
 			b = self.build_b(self.Umin, self.Umax, self.Uk, self.Nu);
 			f = self.build_f(self.M, self.Psi, setPoint, output, self.Mp, self.delta_Up, self.N);
 			options = optimset('Display', 'off');
-			x = quadprog(self.H, f, self.A, b, [], [], -self.dUmax, self.dUmax, [], options);
+			x = quadprog(self.H, f, self.A, b, [], [], [], [], [], options);
 			%% calculate next control
-			delta_Uk = x(1:2);
+			delta_Uk = x(1:self.nu);
 			self.delta_Up = circshift(self.delta_Up, self.nu);
 			self.delta_Up(1:self.nu) = delta_Uk;
 			
